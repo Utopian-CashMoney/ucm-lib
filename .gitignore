@@ -1,0 +1,5 @@
+/.idea/
+/demo/.mvn/
+/demo/target/
+/lib_auth/.mvn/
+/lib_auth/target/

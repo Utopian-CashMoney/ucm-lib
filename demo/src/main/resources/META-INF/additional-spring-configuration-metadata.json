@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "service.message",
+      "type": "java.lang.String",
+      "description": "Description for service.message."
+    }
+  ] }
