@@ -18,7 +18,7 @@ class MyServiceTest {
         assertNotNull(myService.message());
     }
 
-    @SpringBootApplication
+    @SpringBootApplication(scanBasePackages = "com.ucm")
     static class TestConfiguration {
     }
 }
