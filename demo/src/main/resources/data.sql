@@ -1,0 +1,1 @@
+INSERT INTO `users` VALUES (1, 'username', 'email@place.com', 'password', null, 'user', 'name', true)
