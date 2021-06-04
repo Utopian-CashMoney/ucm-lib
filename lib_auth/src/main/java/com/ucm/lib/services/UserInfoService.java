@@ -2,7 +2,10 @@ package com.ucm.lib.services;
 
 
 import com.ucm.lib.entities.UserInfo;
+import com.ucm.lib.entities.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,6 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ucm.lib.dao.UserDAO;
 import com.ucm.lib.entities.User;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Service
 public class UserInfoService implements UserDetailsService {
@@ -29,6 +36,7 @@ public class UserInfoService implements UserDetailsService {
         if(user == null) {
             throw new UsernameNotFoundException("User Not Found with username: " + username);
         }
+
         return UserInfo.build(user);
     }
 }

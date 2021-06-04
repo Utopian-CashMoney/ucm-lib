@@ -3,6 +3,17 @@
 -- Model: New Model    Version: 1.0
 -- MySQL Workbench Forward Engineering
 
+
+-- -----------------------------------------------------
+-- Table `role`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `role` (
+    `id`    INT NOT NULL AUTO_INCREMENT,
+    `name`  VARCHAR(255),
+    PRIMARY KEY (`id`)
+);
+
 -- -----------------------------------------------------
 -- Table `users`
 -- -----------------------------------------------------
@@ -16,12 +27,18 @@ CREATE TABLE IF NOT EXISTS `users`
     `first_name` VARCHAR(63)  NOT NULL,
     `last_name`  VARCHAR(63)  NOT NULL,
     `is_active`  BOOLEAN      NOT NULL,
+    `role`       INT          NOT NULL,
+    CONSTRAINT `fk_user_role1`
+        FOREIGN KEY (`role`)
+            REFERENCES `role` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION,
     PRIMARY KEY (`id`)
 );
 
 CREATE UNIQUE INDEX `email_UNIQUE` ON `users` (`email` ASC);
-
 CREATE UNIQUE INDEX `username_UNIQUE` ON `users` (`username` ASC);
+CREATE UNIQUE INDEX `fk_user_roles1_idx` ON `users` (`role` ASC);
 
 -- -----------------------------------------------------
 -- Table `confirm_token`
@@ -42,4 +59,3 @@ CREATE TABLE IF NOT EXISTS `confirm_token`
 );
 
 CREATE UNIQUE INDEX `fk_confirm_token_users1_idx` ON `confirm_token` (`users_id` ASC);
-

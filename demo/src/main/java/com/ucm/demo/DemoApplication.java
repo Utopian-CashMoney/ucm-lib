@@ -29,6 +29,8 @@ public class DemoApplication {
     @GetMapping("/")
     @ResponseBody
     public String home() {
+        //In the event of a successful authentication, get it. In the case of no such successful authentication,
+        //a 401 error will immediately be thrown to the user.
         Authentication authentication = authenticationFacade.getAuthentication();
         return authentication.getName();
     }
