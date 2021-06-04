@@ -10,10 +10,10 @@
     </parent>
     <groupId>com.ucm</groupId>
     <artifactId>lib_auth</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>library</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Authentication and Authorization library for Utopian CashMoney.</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>
