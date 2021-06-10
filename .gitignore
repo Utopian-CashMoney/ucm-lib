@@ -3,3 +3,5 @@
 /demo/target/
 /lib_auth/.mvn/
 /lib_auth/target/
+/lib_email/.mvn/
+/lib_email/target/
