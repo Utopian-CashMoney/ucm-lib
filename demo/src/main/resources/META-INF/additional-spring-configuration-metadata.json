@@ -1,8 +1,13 @@
 {
   "properties": [
     {
-      "name": "service.message",
+      "name": "app.jwtSecret",
       "type": "java.lang.String",
-      "description": "Description for service.message."
+      "description": "Private JWT Secret."
+    },
+    {
+      "name": "app.jwtExpirationMs",
+      "type": "java.lang.String",
+      "description": "JWT expiration in milliseconds."
     }
   ] }

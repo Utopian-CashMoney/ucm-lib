@@ -1,15 +1,10 @@
 package com.ucm.lib.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Collection;
 import java.util.Objects;
 
 /**
@@ -65,6 +60,10 @@ public class User {
     @NotBlank
     @Column(name="is_active")
     private Boolean isActive;
+
+    @ManyToOne
+    @JoinColumn(name = "role", referencedColumnName = "id")
+    private UserRole role;
 
 
     public User() {
@@ -143,16 +142,24 @@ public class User {
         isActive = active;
     }
 
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(phNum, user.phNum) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(isActive, user.isActive);
+        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(phNum, user.phNum) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(isActive, user.isActive) && Objects.equals(role, user.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, email, password, phNum, firstName, lastName, isActive);
+        return Objects.hash(id, username, email, password, phNum, firstName, lastName, isActive, role);
     }
 }

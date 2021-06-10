@@ -1,9 +1,14 @@
 package com.ucm.lib.entities;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.ucm.lib.entities.User;
@@ -25,10 +30,11 @@ public class UserInfo implements UserDetails {
 
     private final String password;
 
-    private Collection<? extends GrantedAuthority> authorities;
+    private final Collection<? extends GrantedAuthority> authorities;
 
 
-    public UserInfo(Integer id, String username, String email, String password, String phNum, String firstName, String lastName) {
+    public UserInfo(Integer id, String username, String email, String password, String phNum, String firstName,
+                    String lastName, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -36,10 +42,15 @@ public class UserInfo implements UserDetails {
         this.phNum = phNum;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.authorities = authorities;
     }
 
-    public static UserInfo build(User user) {
-
+    public static UserInfo build(@NotNull User user) {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
+        if(user.getActive()) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_VERIFIED"));
+        }
         return new UserInfo(
                 user.getId(),
                 user.getUsername(),
@@ -47,9 +58,9 @@ public class UserInfo implements UserDetails {
                 user.getPassword(),
                 user.getPhNum(),
                 user.getFirstName(),
-                user.getLastName());
-
-
+                user.getLastName(),
+                authorities
+        );
     }
 
     @Override

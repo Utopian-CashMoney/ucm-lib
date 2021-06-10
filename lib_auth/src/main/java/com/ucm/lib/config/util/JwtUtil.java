@@ -1,4 +1,4 @@
-package com.ucm.lib.services;
+package com.ucm.lib.config.util;
 
 import java.util.Date;
 
@@ -17,6 +17,10 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 
+/**
+ * Helper class to use JWT-based authentication.
+ * @author Charvin Patel
+ */
 @Component
 public class JwtUtil {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
@@ -28,9 +32,7 @@ public class JwtUtil {
     private int jwtExpirationMs;
 
     public String generateJwtToken(Authentication authentication) {
-
         UserInfo userPrincipal = (UserInfo) authentication.getPrincipal();
-
         return Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))
                 .setIssuedAt(new Date())

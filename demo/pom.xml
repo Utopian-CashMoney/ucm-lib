@@ -38,6 +38,12 @@
             <artifactId>library</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.ucm</groupId>
+            <artifactId>lib_auth</artifactId>
+            <version>0.0.3-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
