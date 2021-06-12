@@ -9,5 +9,6 @@
     <modules>
         <module>lib_auth</module>
         <module>demo</module>
+        <module>lib_email</module>
     </modules>
 </project>
