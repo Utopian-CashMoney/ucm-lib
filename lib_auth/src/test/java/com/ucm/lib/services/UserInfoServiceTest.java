@@ -2,6 +2,7 @@ package com.ucm.lib.services;
 
 import com.ucm.lib.dao.UserDAO;
 import com.ucm.lib.entities.User;
+import com.ucm.lib.entities.UserRole;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,11 @@ class UserInfoServiceTest {
 		u1.setLastName("one");
 		u1.setLastName("one");
 		u1.setActive(true);
+
+		UserRole userRole = new UserRole();
+		userRole.setId(1);
+		userRole.setName("Role");
+		u1.setRole(userRole);
 
 		when(userRepo.findByUsername("name")).thenReturn(u1);
 		UserDetails userDetail = userService.loadUserByUsername("name");

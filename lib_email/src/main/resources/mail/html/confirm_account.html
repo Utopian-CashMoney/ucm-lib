@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title th:remove="all">Account Confirmation Required</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <h2>Account Confirmation</h2>
+    <p>To activate your account, click here: <!--/*@thymesVar id="confirmation_code" type="java.lang.String"*/-->
+    <a href="http://localhost:8080/user_account/confirmation" th:href="#{base_url}+'/user_account/confirmation?'+${confirmation_code}">Confirm My Account!</a></p>
+    <br>
+    <p>This url will expire on <!--/*@thymesVar id="expiration" type="java.lang.String"*/-->
+    <span th:text="${expiration}">Some Date And Time</span></p>
+</body>
+</html>
