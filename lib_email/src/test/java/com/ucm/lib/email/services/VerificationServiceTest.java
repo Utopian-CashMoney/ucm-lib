@@ -97,15 +97,16 @@ class VerificationServiceTest {
         }
     }
 
-    static final VerificationService<VerifiableEntity, VerificationEntity, VerifiableDAO, VerificationDAO> verificationService = new VerificationService<>();
+    static final VerificationService<VerifiableEntity, VerificationEntity, VerifiableDAO, VerificationDAO>
+            verificationService = new VerificationService<>(new VerificationDAO(null), new VerifiableDAO());
 
     @Test
     void generateConfirmationTest() {
         VerifiableEntity verifiableEntity = new VerifiableEntity();
         verifiableEntity.setActive(false);
         VerificationEntity verificationEntity = new VerificationEntity();
-        VerificationDAO verificationDAO = new VerificationDAO(null);
-        verificationEntity = verificationService.generateConfirmation(verifiableEntity, verificationEntity, verificationDAO);
+        verificationService.verificationDAO.verificationEntity = null;
+        verificationEntity = verificationService.generateConfirmation(verifiableEntity, verificationEntity);
         assertNotNull(verificationEntity.code);
         assertEquals(verifiableEntity, verificationEntity.entity);
         assertNotNull(verificationEntity.expires);
@@ -119,9 +120,8 @@ class VerificationServiceTest {
         verificationEntity.setCode("CODE");
         verificationEntity.setExpires(LocalDateTime.now().plusDays(1));
         verificationEntity.setEntity(verifiableEntity);
-        VerificationDAO verificationDAO = new VerificationDAO(verificationEntity);
-        VerifiableDAO verifiableDAO = new VerifiableDAO();
-        assertTrue(verificationService.confirm("CODE", verificationDAO, verifiableDAO));
+        verificationService.verificationDAO.verificationEntity = verificationEntity;
+        assertTrue(verificationService.confirm("CODE"));
         assertTrue(verifiableEntity.isActive());
     }
 }
