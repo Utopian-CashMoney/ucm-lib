@@ -5,29 +5,28 @@ import com.ucm.lib.email.dao.IVerificationDAO;
 import com.ucm.lib.email.entity.IVerifiableEntity;
 import com.ucm.lib.email.entity.IVerificationEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Service
-public class VerificationService {
+public class VerificationService<
+        VerifiableEntity extends IVerifiableEntity,
+        VerificationEntity extends IVerificationEntity<VerifiableEntity>,
+        VerifiableDAO extends IVerifiableDAO<VerifiableEntity>,
+        VerificationDAO extends IVerificationDAO<VerificationEntity>
+        > {
     /**
      * Generate (populate) a confirmation entity for a confirmable entity.
      * @author Joshua Podhola.
      * @param verifiableEntity An @Entity that implements IVerifiableEntity.
      * @param verificationEntity An @Entity that implements IVerificationEntity. Is modified in place.
      * @param verificationDAO A @Repository that implements IVerificationDAO.
-     * @param <VerifiableEntity> The type of entity that should be verified.
-     * @param <VerificationEntity> The type of entity that should store the verification information.
-     * @param <VerificationDAO> The type of repository that accesses the verification information.
      * @return The modified verificationEntity.
      */
-    protected <VerifiableEntity extends IVerifiableEntity,
-               VerificationEntity extends IVerificationEntity<VerifiableEntity>,
-               VerificationDAO extends IVerificationDAO<VerificationEntity>>
-    VerificationEntity generateConfirmation(final VerifiableEntity verifiableEntity,
+    protected VerificationEntity generateConfirmation(final VerifiableEntity verifiableEntity,
                                             VerificationEntity verificationEntity,
                                             final VerificationDAO verificationDAO) {
         verificationEntity.setEntity(verifiableEntity);
@@ -45,17 +44,9 @@ public class VerificationService {
      * @param confirmationToken The token that should be used for confirmation.
      * @param verificationDAO The DAO that should be used for the verification entities.
      * @param verifiableDAO The DAO that should be used
-     * @param <VerifiableEntity> The entity type to verify.
-     * @param <VerificationEntity> The entity storing the confirmation information.
-     * @param <VerificationDAO> The DAO type that stores the confirmation information.
-     * @param <VerifiableDAO> The DAO type that stores the entity type.
      * @return True if successfully verified, false if the token has expired.
      */
-    public <VerifiableEntity extends IVerifiableEntity,
-            VerificationEntity extends IVerificationEntity<VerifiableEntity>,
-            VerificationDAO extends IVerificationDAO<VerificationEntity>,
-            VerifiableDAO extends IVerifiableDAO<VerifiableEntity>>
-    Boolean confirm(final String confirmationToken,
+    public Boolean confirm(final String confirmationToken,
                     final VerificationDAO verificationDAO,
                     final VerifiableDAO verifiableDAO) {
         VerificationEntity verificationEntity = verificationDAO.findFirstByCode(confirmationToken);

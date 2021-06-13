@@ -16,9 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Transactional
 class VerificationServiceTest {
-    @Autowired
-    VerificationService verificationService;
-
     static class VerifiableEntity implements IVerifiableEntity {
         private Boolean active;
 
@@ -99,6 +96,8 @@ class VerificationServiceTest {
             return entity;
         }
     }
+
+    static final VerificationService<VerifiableEntity, VerificationEntity, VerifiableDAO, VerificationDAO> verificationService = new VerificationService<>();
 
     @Test
     void generateConfirmationTest() {
