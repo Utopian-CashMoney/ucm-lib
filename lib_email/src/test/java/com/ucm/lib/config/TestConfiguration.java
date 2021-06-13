@@ -1,4 +1,4 @@
-package com.ucm.lib.email.config;
+package com.ucm.lib.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;

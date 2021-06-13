@@ -1,4 +1,4 @@
-package com.ucm.lib.email.services;
+package com.ucm.lib.services;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

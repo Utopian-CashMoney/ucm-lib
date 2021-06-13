@@ -1,6 +1,6 @@
-package com.ucm.lib.email.dao;
+package com.ucm.lib.dao;
 
-import com.ucm.lib.email.entity.IVerificationEntity;
+import com.ucm.lib.entity.IVerificationEntity;
 
 public interface IVerificationDAO<T extends IVerificationEntity<?>> {
     T findFirstByCode(String code);

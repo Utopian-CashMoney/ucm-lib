@@ -1,9 +1,9 @@
-package com.ucm.lib.email.services;
+package com.ucm.lib.services;
 
-import com.ucm.lib.email.dao.IVerifiableDAO;
-import com.ucm.lib.email.dao.IVerificationDAO;
-import com.ucm.lib.email.entity.IVerifiableEntity;
-import com.ucm.lib.email.entity.IVerificationEntity;
+import com.ucm.lib.dao.IVerifiableDAO;
+import com.ucm.lib.dao.IVerificationDAO;
+import com.ucm.lib.entity.IVerifiableEntity;
+import com.ucm.lib.entity.IVerificationEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 import org.thymeleaf.context.Context;

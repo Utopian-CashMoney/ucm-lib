@@ -1,4 +1,4 @@
-package com.ucm.lib.email.services;
+package com.ucm.lib.services;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;

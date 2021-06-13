@@ -1,4 +1,4 @@
-package com.ucm.lib.email.entity;
+package com.ucm.lib.entity;
 
 /**
  * Interface for any value that VerificationService should support.

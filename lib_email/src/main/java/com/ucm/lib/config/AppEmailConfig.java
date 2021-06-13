@@ -1,4 +1,4 @@
-package com.ucm.lib.email.config;
+package com.ucm.lib.config;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

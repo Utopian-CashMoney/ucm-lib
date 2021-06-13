@@ -1,4 +1,4 @@
-package com.ucm.lib.email.entity;
+package com.ucm.lib.entity;
 
 import java.time.LocalDateTime;
 
