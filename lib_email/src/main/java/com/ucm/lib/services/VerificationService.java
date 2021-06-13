@@ -38,7 +38,7 @@ public class VerificationService<
      * @param verificationEntity An @Entity that implements IVerificationEntity. Is modified in place.
      * @return The modified verificationEntity.
      */
-    protected VerificationEntity generateConfirmation(final VerifiableEntity verifiableEntity,
+    public VerificationEntity generateConfirmation(final VerifiableEntity verifiableEntity,
                                             VerificationEntity verificationEntity) {
         verificationEntity.setEntity(verifiableEntity);
         verificationEntity.setExpires(LocalDateTime.now().plusDays(1));
