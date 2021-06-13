@@ -1,5 +1,6 @@
 package com.ucm.lib.email.services;
 
+import com.ucm.lib.email.dao.IVerifiableDAO;
 import com.ucm.lib.email.dao.IVerificationDAO;
 import com.ucm.lib.email.entity.IVerifiableEntity;
 import com.ucm.lib.email.entity.IVerificationEntity;
@@ -19,7 +20,7 @@ class VerificationServiceTest {
     VerificationService verificationService;
 
     static class VerifiableEntity implements IVerifiableEntity {
-        public Boolean active;
+        private Boolean active;
 
         @Override
         public Boolean isActive() {
@@ -32,15 +33,19 @@ class VerificationServiceTest {
         }
     }
 
-    @SuppressWarnings("FieldCanBeLocal")
     static class VerificationEntity implements IVerificationEntity<VerifiableEntity> {
-        public VerifiableEntity entity;
-        public LocalDateTime expires;
-        public String code;
+        private VerifiableEntity entity;
+        private LocalDateTime expires;
+        private String code;
 
         @Override
         public void setEntity(VerifiableEntity entity) {
             this.entity = entity;
+        }
+
+        @Override
+        public VerifiableEntity getEntity() {
+            return entity;
         }
 
         @Override
@@ -49,21 +54,31 @@ class VerificationServiceTest {
         }
 
         @Override
+        public LocalDateTime getExpires() {
+            return expires;
+        }
+
+        @Override
         public void setCode(String code) {
             this.code = code;
+        }
+
+        @Override
+        public String getCode() {
+            return code;
         }
     }
 
     static class VerificationDAO implements IVerificationDAO<VerificationEntity> {
-        VerificationEntity verificationEntity;
+        private VerificationEntity verificationEntity;
 
         VerificationDAO(VerificationEntity verificationEntity) {
             this.verificationEntity = verificationEntity;
         }
 
-        //Emulate the behavior of not finding any entity with that code.
         @Override
         public VerificationEntity findFirstByCode(String code) {
+            if(verificationEntity != null && verificationEntity.getCode().equals(code)) return verificationEntity;
             return null;
         }
 
@@ -72,17 +87,42 @@ class VerificationServiceTest {
         public VerificationEntity save(VerificationEntity entity) {
             return entity;
         }
+
+        @Override
+        public void delete(VerificationEntity entity) {
+        }
+    }
+
+    static class VerifiableDAO implements IVerifiableDAO<VerifiableEntity> {
+        @Override
+        public VerifiableEntity save(VerifiableEntity entity) {
+            return entity;
+        }
     }
 
     @Test
     void generateConfirmationTest() {
         VerifiableEntity verifiableEntity = new VerifiableEntity();
-        verifiableEntity.active = false;
+        verifiableEntity.setActive(false);
         VerificationEntity verificationEntity = new VerificationEntity();
-        VerificationDAO verificationDAO = new VerificationDAO(verificationEntity);
+        VerificationDAO verificationDAO = new VerificationDAO(null);
         verificationEntity = verificationService.generateConfirmation(verifiableEntity, verificationEntity, verificationDAO);
         assertNotNull(verificationEntity.code);
         assertEquals(verifiableEntity, verificationEntity.entity);
         assertNotNull(verificationEntity.expires);
+    }
+
+    @Test
+    void confirmTest() {
+        VerifiableEntity verifiableEntity = new VerifiableEntity();
+        verifiableEntity.setActive(false);
+        VerificationEntity verificationEntity = new VerificationEntity();
+        verificationEntity.setCode("CODE");
+        verificationEntity.setExpires(LocalDateTime.now().plusDays(1));
+        verificationEntity.setEntity(verifiableEntity);
+        VerificationDAO verificationDAO = new VerificationDAO(verificationEntity);
+        VerifiableDAO verifiableDAO = new VerifiableDAO();
+        assertTrue(verificationService.confirm("CODE", verificationDAO, verifiableDAO));
+        assertTrue(verifiableEntity.isActive());
     }
 }
