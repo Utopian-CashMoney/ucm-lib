@@ -1,0 +1,12 @@
+<root>
+    <item name='com.ucm.lib.services.AuthenticationFacade com.ucm.lib.entities.User getByUsername(java.lang.String)'>
+        <annotation name='org.jetbrains.annotations.Contract'>
+            <val name="pure" val="true"/>
+        </annotation>
+    </item>
+    <item name='com.ucm.lib.services.AuthenticationFacade com.ucm.lib.entities.UserInfo getUserInfo()'>
+        <annotation name='org.jetbrains.annotations.Contract'>
+            <val name="pure" val="true"/>
+        </annotation>
+    </item>
+</root>
