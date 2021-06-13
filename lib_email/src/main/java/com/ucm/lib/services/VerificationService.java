@@ -1,9 +1,9 @@
 package com.ucm.lib.services;
 
-import com.ucm.lib.dao.IVerifiableDAO;
 import com.ucm.lib.dao.IVerificationDAO;
 import com.ucm.lib.entity.IVerifiableEntity;
 import com.ucm.lib.entity.IVerificationEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 import org.thymeleaf.context.Context;
@@ -16,8 +16,8 @@ import java.util.UUID;
 public class VerificationService<
         VerifiableEntity extends IVerifiableEntity,
         VerificationEntity extends IVerificationEntity<VerifiableEntity>,
-        VerifiableDAO extends IVerifiableDAO<VerifiableEntity>,
-        VerificationDAO extends IVerificationDAO<VerificationEntity>
+        VerifiableDAO extends JpaRepository<VerifiableEntity, ?>,
+        VerificationDAO extends JpaRepository<VerificationEntity, ?> & IVerificationDAO<VerificationEntity>
         > {
     VerificationDAO verificationDAO;
     VerifiableDAO verifiableDAO;
