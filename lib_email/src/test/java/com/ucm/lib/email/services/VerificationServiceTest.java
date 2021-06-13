@@ -4,6 +4,8 @@ import com.ucm.lib.email.dao.IVerifiableDAO;
 import com.ucm.lib.email.dao.IVerificationDAO;
 import com.ucm.lib.email.entity.IVerifiableEntity;
 import com.ucm.lib.email.entity.IVerificationEntity;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Transactional
 class VerificationServiceTest {
+    @Autowired
+    private EmailService emailService;
     static class VerifiableEntity implements IVerifiableEntity {
         private Boolean active;
 
@@ -97,8 +101,22 @@ class VerificationServiceTest {
         }
     }
 
-    static final VerificationService<VerifiableEntity, VerificationEntity, VerifiableDAO, VerificationDAO>
-            verificationService = new VerificationService<>(new VerificationDAO(null), new VerifiableDAO());
+    final VerificationService<
+            VerifiableEntity,
+            VerificationEntity,
+            VerifiableDAO,
+            VerificationDAO>
+            verificationService = new VerificationService<>(
+                    new VerificationDAO(null),
+                    new VerifiableDAO(),
+                    null
+            );
+
+    @BeforeEach
+    void setUp() {
+        //Janky, but required
+        verificationService.emailService = emailService;
+    }
 
     @Test
     void generateConfirmationTest() {
@@ -123,5 +141,16 @@ class VerificationServiceTest {
         verificationService.verificationDAO.verificationEntity = verificationEntity;
         assertTrue(verificationService.confirm("CODE"));
         assertTrue(verifiableEntity.isActive());
+    }
+
+    @Test
+    void sendVerificationEmailTest() {
+        VerifiableEntity verifiableEntity = new VerifiableEntity();
+        verifiableEntity.setActive(false);
+        VerificationEntity verificationEntity = new VerificationEntity();
+        verificationEntity.setCode("CODE");
+        verificationEntity.setExpires(LocalDateTime.now().plusDays(1));
+        verificationEntity.setEntity(verifiableEntity);
+        verificationService.sendVerificationEmail(verificationEntity, "test@test.test", "html/confirm_account");
     }
 }

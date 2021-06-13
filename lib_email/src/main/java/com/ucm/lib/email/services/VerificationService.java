@@ -6,8 +6,11 @@ import com.ucm.lib.email.entity.IVerifiableEntity;
 import com.ucm.lib.email.entity.IVerificationEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
+import org.thymeleaf.context.Context;
 
+import javax.mail.MessagingException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 public class VerificationService<
@@ -18,10 +21,14 @@ public class VerificationService<
         > {
     VerificationDAO verificationDAO;
     VerifiableDAO verifiableDAO;
+    EmailService emailService;
 
-    public VerificationService(VerificationDAO verificationDAO, VerifiableDAO verifiableDAO) {
+    private static final DateTimeFormatter DATETIME_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a");
+
+    public VerificationService(VerificationDAO verificationDAO, VerifiableDAO verifiableDAO, EmailService emailService) {
         this.verificationDAO = verificationDAO;
         this.verifiableDAO = verifiableDAO;
+        this.emailService = emailService;
     }
 
     /**
@@ -63,6 +70,17 @@ public class VerificationService<
             verifiableDAO.save(verifiableEntity);
             verificationDAO.delete(verificationEntity);
             return true;
+        }
+    }
+
+    public void sendVerificationEmail(VerificationEntity verificationEntity, String email, String template) {
+        try {
+            Context context = new Context();
+            context.setVariable("expiration", verificationEntity.getExpires().format(DATETIME_FORMATTER));
+            context.setVariable("confirmation_code", verificationEntity.getCode());
+            emailService.sendEmail(email, context,template,"Verification Required");
+        } catch (MessagingException e) {
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Failed to send confirmation email.", e);
         }
     }
 }
