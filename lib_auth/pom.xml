@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.ucm</groupId>
     <artifactId>lib_auth</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.5-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>lib_auth</name>
     <description>Authentication and Authorization library for Utopian CashMoney.</description>
