@@ -1,6 +1,9 @@
 package com.ucm.lib.entities;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
@@ -17,7 +20,7 @@ public class UserRole implements Serializable {
     private String name;
 
     @OneToMany(mappedBy = "role")
-    private Collection<User> users;
+    @JsonIgnore private Collection<User> users;
 
     public Integer getId() {
         return id;
