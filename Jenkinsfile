@@ -9,7 +9,7 @@ pipeline {
     environment {
 	    COMMIT_HASH = "${sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()}"
 	    
-	    registry = "202447729588.dkr.ecr.us-east-2.amazonaws.com/bankingapp"
+	    registry = "202447729588.dkr.ecr.us-east-2.amazonaws.com/ucm_lib"
 	 
 	   // AWS_ID = credentials('AWS_ID')
 	    
