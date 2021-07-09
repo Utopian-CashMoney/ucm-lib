@@ -37,12 +37,6 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>com.ucm</groupId>
-            <artifactId>library</artifactId>
-            <version>${project.version}</version>
-        </dependency>
         <dependency>
             <groupId>com.ucm</groupId>
             <artifactId>lib_auth</artifactId>
