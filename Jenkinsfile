@@ -14,12 +14,13 @@ pipeline {
 	   // AWS_ID = credentials('AWS_ID')
 	    
 	    IMG_NAME = "ucmlib"
+	    scannerHome = tool 'SonarqubeScanner'
     }
     
     stages { 
 	      stage ('Checkout Git Repo') {
 	        steps {
-	                git branch: 'master', url: 'https://github.com/Utopian-CashMoney/ucm-lib.git'            
+	                git branch: 'master', url: 'https://github.com/Utopian-CashMoney/ucm_lib.git'            
 	        }
 	    }
 	    
@@ -30,7 +31,20 @@ pipeline {
                   sh 'mvn clean test'        
             }
         }
-
+	
+	stage ('SonarQube Analysis') {
+            
+	     tools {
+			jdk 'jdk11'
+		}
+		
+             steps {
+                      withSonarQubeEnv('Sonarqube') {
+                          sh 'mvn sonar:sonar'
+                      }
+                  }
+        }    
+	    
         stage ('Build') {
             
             steps {
