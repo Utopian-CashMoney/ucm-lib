@@ -20,7 +20,7 @@ pipeline {
     stages { 
 	      stage ('Checkout Git Repo') {
 	        steps {
-	                git branch: 'master', url: 'https://github.com/Utopian-CashMoney/ucm_lib.git'            
+	                git branch: 'master', url: 'https://github.com/Utopian-CashMoney/ucm-lib.git'            
 	        }
 	    }
 	    
