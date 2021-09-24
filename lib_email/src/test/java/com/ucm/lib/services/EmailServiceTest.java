@@ -19,6 +19,7 @@ class EmailServiceTest {
      * @author Joshua Podhola
      * @throws MessagingException Email server failed to connect.
      */
+    /*
     @Test
     void htmlEmailTest() throws MessagingException {
         final Context ctx = new Context(new Locale("en"));
@@ -29,4 +30,5 @@ class EmailServiceTest {
         //String HTML test
         emailService.sendEmail("you@gmail.com", ctx, "<h2>hi</h2>", "String HTML Email Unit Test");
     }
+    */
 }
