@@ -15,7 +15,3 @@ CREATE TABLE IF NOT EXISTS `users`
     `is_active`  TINYINT      NOT NULL,
     PRIMARY KEY (`id`)
 );
-
-CREATE UNIQUE INDEX `email_UNIQUE` ON `users` (`email` ASC);
-
-CREATE UNIQUE INDEX `username_UNIQUE` ON `users` (`username` ASC);
